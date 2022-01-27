@@ -15,10 +15,12 @@ class CommonTextField extends StatelessWidget {
   final Function(String)? validator;
   final Function(String)? onChange;
   final AutovalidateMode? autovalidateMode;
+  final int? maxLines;
 
   CommonTextField(
       {Key? key,
         this.autovalidateMode,
+        this.maxLines,
       required this.controller,
       required this.prefixIcon,
       required this.label,
@@ -52,6 +54,9 @@ class CommonTextField extends StatelessWidget {
       },
       controller: controller,
       readOnly: readOnly!,
+      maxLines: maxLines??1,
+      minLines: 1,
+
       decoration: InputDecoration(
         isDense: true,
         filled: true,

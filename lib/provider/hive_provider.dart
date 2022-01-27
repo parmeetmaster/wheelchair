@@ -13,6 +13,7 @@ class HiveProvider extends ChangeNotifier {
     Hive.initFlutter();
     Hive.registerAdapter(FormModelAdapter());
     Hive.registerAdapter(WheelChairQuestion1ModelAdapter());
+    Hive.registerAdapter(WheelChairQuestion2ModelAdapter());
   }
 
  Future<List<FormModel> > getAllItems() async {

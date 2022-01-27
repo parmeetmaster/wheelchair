@@ -17,7 +17,6 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FormModel(
-      wheelChairQuestion1Model: fields[11] as WheelChairQuestion1Model?,
       clientName: fields[0] as String?,
       dateOfBirth: fields[1] as String?,
       age: fields[2] as int?,
@@ -29,13 +28,30 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       askWhereWillYouUse: fields[8] as String?,
       askWhatisExperenceUsingWheelChair: fields[9] as String?,
       observeCanClientHoldTheirSafety: fields[10] as String?,
-    )..wheelChairQuestion2Model = fields[12] as WheelChairQuestion2Model?;
+      wheelChairQuestion1Model: fields[11] as WheelChairQuestion1Model?,
+      wheelChairQuestion2Model: fields[12] as WheelChairQuestion2Model?,
+      observeCanClientsitUpSafely: fields[13] as String?,
+      observeNotes: fields[14] as String?,
+      doesPersonHavePressureSores: fields[15] as String?,
+      doesPersonHaveHistoryPressureSores: fields[16] as String?,
+      describesSores: fields[17] as String?,
+      recommondatonGen: fields[18] as String?,
+      recommondatonReferOut: fields[19] as String?,
+      recommondatonReferName: fields[20] as String?,
+      referOrganisation: fields[21] as String?,
+      referTodayDate: fields[22] as String?,
+      fitclientName: fields[23] as String?,
+      fitClientTodayDate: fields[24] as String?,
+      seatWidth: fields[25] as String?,
+      seatHeight: fields[26] as String?,
+      seatLength: fields[27] as String?,
+    );
   }
 
   @override
   void write(BinaryWriter writer, FormModel obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(28)
       ..writeByte(0)
       ..write(obj.clientName)
       ..writeByte(1)
@@ -61,7 +77,37 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       ..writeByte(11)
       ..write(obj.wheelChairQuestion1Model)
       ..writeByte(12)
-      ..write(obj.wheelChairQuestion2Model);
+      ..write(obj.wheelChairQuestion2Model)
+      ..writeByte(13)
+      ..write(obj.observeCanClientsitUpSafely)
+      ..writeByte(14)
+      ..write(obj.observeNotes)
+      ..writeByte(15)
+      ..write(obj.doesPersonHavePressureSores)
+      ..writeByte(16)
+      ..write(obj.doesPersonHaveHistoryPressureSores)
+      ..writeByte(17)
+      ..write(obj.describesSores)
+      ..writeByte(18)
+      ..write(obj.recommondatonGen)
+      ..writeByte(19)
+      ..write(obj.recommondatonReferOut)
+      ..writeByte(20)
+      ..write(obj.recommondatonReferName)
+      ..writeByte(21)
+      ..write(obj.referOrganisation)
+      ..writeByte(22)
+      ..write(obj.referTodayDate)
+      ..writeByte(23)
+      ..write(obj.fitclientName)
+      ..writeByte(24)
+      ..write(obj.fitClientTodayDate)
+      ..writeByte(25)
+      ..write(obj.seatWidth)
+      ..writeByte(26)
+      ..write(obj.seatHeight)
+      ..writeByte(27)
+      ..write(obj.seatLength);
   }
 
   @override

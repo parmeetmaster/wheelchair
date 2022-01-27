@@ -39,6 +39,7 @@ class _GroupRadioTitleState extends State<GroupRadioTitle> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if(widget.title.isNotEmpty)
           Text(widget.title ?? "",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18.sp),),
           Row(
             children: [

@@ -29,6 +29,10 @@ class _FormScreenState extends State<FormScreen> {
 
   // ask question
   late final TextEditingController experenceUsingWheelChair;
+
+  // pressure shore
+  late final TextEditingController pressureSoreDescription;
+
   late FormModel model;
 
   @override
@@ -37,6 +41,7 @@ class _FormScreenState extends State<FormScreen> {
 
     // add code for update as well
     model = FormModel();
+    //   _getData();
 
     name = TextEditingController();
     dateOfBirthAndAge = TextEditingController();
@@ -49,6 +54,9 @@ class _FormScreenState extends State<FormScreen> {
     experenceUsingWheelChair = TextEditingController();
     // observe
     model.wheelChairQuestion2Model = WheelChairQuestion2Model();
+
+    // pressure
+    pressureSoreDescription = TextEditingController();
   }
 
   @override
@@ -193,35 +201,107 @@ class _FormScreenState extends State<FormScreen> {
                 label: "Experence Using Wheel Chair",
                 hint: "Write Description below"),
 
+            // onserve
             CommonSpaceElement(),
             TextTitle("Observe"),
             GroupRadioTitle(
-              title: "Do you curruntly have WheelChair?",
+              title: "Can client hold their head up safely?",
               value1: "Yes",
               value2: "No",
-              groupvalue: model.askDoYouCurruntlyHaveWheelChair,
+              groupvalue: model.observeCanClientHoldTheirSafety,
               onChanged1: (s) {},
               onChanged2: (s2) {},
               onUpdate: (str) {
                 setState(() {
-                  model.askDoYouCurruntlyHaveWheelChair = str;
+                  model.observeCanClientHoldTheirSafety = str;
                 });
               },
             ),
-
+            GroupRadioTitle(
+              title: "Can client sit up safely?",
+              value1: "Yes",
+              value2: "No",
+              groupvalue: model.observeCanClientsitUpSafely,
+              onChanged1: (s) {},
+              onChanged2: (s2) {},
+              onUpdate: (str) {
+                setState(() {
+                  model.observeCanClientsitUpSafely = str;
+                });
+              },
+            ),
             WheelChairQuestion2(
               model: model.wheelChairQuestion2Model!,
               onUpdate: (object) {},
+            ),
+
+            CommonTextField(
+                controller: experenceUsingWheelChair,
+                prefixIcon: Icons.file_copy,
+                label: "Notes",
+                maxLines: 2,
+                hint: "Write notes below"),
+
+// Pressure sores / skin
+            CommonSpaceElement(),
+            TextTitle("Pressure Sores/Skin"),
+            CommonSpaceElement(),
+            GroupRadioTitle(
+              title: "Does the person have pressure sores?",
+              value1: "Yes",
+              value2: "No",
+              groupvalue: model.doesPersonHavePressureSores,
+              onChanged1: (s) {},
+              onChanged2: (s2) {},
+              onUpdate: (str) {
+                setState(() {
+                  model.doesPersonHavePressureSores = str;
+                });
+              },
+            ),
+            GroupRadioTitle(
+              title: "Does the person have a history pressure sores?",
+              value1: "Yes",
+              value2: "No",
+              groupvalue: model.doesPersonHaveHistoryPressureSores,
+              onChanged1: (s) {},
+              onChanged2: (s2) {},
+              onUpdate: (str) {
+                setState(() {
+                  model.doesPersonHaveHistoryPressureSores = str;
+                });
+              },
+            ),
+            CommonTextField(
+                controller: experenceUsingWheelChair,
+                prefixIcon: Icons.file_copy,
+                label: "If yes describe below",
+                maxLines: 2,
+                hint: ""),
+
+// recommandation and prescription
+          CommonSpaceElement(),
+            TextTitle("Recommondation & Prescription"),
+            GroupRadioTitle(
+              title: "",
+              value1: "Yes",
+              value2: "No",
+              groupvalue: model.recommondatonGen,
+              onChanged1: (s) {},
+              onChanged2: (s2) {},
+              onUpdate: (str) {
+                setState(() {
+                  model.recommondatonGen = str;
+                });
+              },
             ),
 
             OutlinedButton(
               onPressed: () async {
                 final provider =
                     Provider.of<HiveProvider>(context, listen: false);
-
-                await provider.insert(FormModel(
-                    wheelChairQuestion1Model: WheelChairQuestion1Model(),
-                    phnoNumber: "9871917515"));
+                this.model.phnoNumber = "98";
+                await provider.insert(this.model);
                 await provider.getAllItems();
               },
               child: Text("Press"),
@@ -230,5 +310,13 @@ class _FormScreenState extends State<FormScreen> {
         ),
       ),
     );
+  }
+
+  void _getData() async {
+    final provider = Provider.of<HiveProvider>(context, listen: false);
+    List<FormModel> n = await provider.getAllItems();
+    setState(() {
+      this.model = n.first;
+    });
   }
 }
