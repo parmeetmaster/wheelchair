@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 
 import 'package:wheelchair/presentation/screens/form/form_screen.dart';
+import 'package:wheelchair/presentation/screens/list_of_member_screen/list_of_members_screen.dart';
 import 'package:wheelchair/provider/hive_provider.dart';
 
 import 'presentation/screens/login/login.dart';
 
 void main() async {
- await HiveProvider.init();
-  runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => HiveProvider()),
-    ], child: MyApp()),
-  );
+
+  await Get.put(HiveController());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,12 +23,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(412, 847),
-      builder: () => MaterialApp(
+      builder: () => GetMaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FormScreen(),
+        home: ListOfMemebers(),
       ),
     );
   }

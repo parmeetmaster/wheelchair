@@ -10,6 +10,9 @@ class FormModel extends HiveObject {
   @HiveField(1)
   String? dateOfBirth;
 
+  @HiveField(28)
+  String? address;
+
   @HiveField(2)
   int? age;
 
@@ -17,7 +20,7 @@ class FormModel extends HiveObject {
   String? phnoNumber;
 
   @HiveField(4)
-  String? careTakePhoneNumber;
+  String? careTakerName;
 
   @HiveField(5)
   String? diagnosis;
@@ -51,13 +54,13 @@ class FormModel extends HiveObject {
 
   // person sores
   @HiveField(15)
-  String? doesPersonHavePressureSores;
+  String? doesPersonHavePressureSoresDescription;
 
   @HiveField(16)
   String? doesPersonHaveHistoryPressureSores;
 
   @HiveField(17)
-  String? describesSores;
+  String? PressureSoresDescription;
 
   // recommondation
   @HiveField(18)
@@ -96,7 +99,7 @@ class FormModel extends HiveObject {
       this.dateOfBirth,
       this.age,
       this.phnoNumber,
-      this.careTakePhoneNumber,
+      this.careTakerName,
       this.diagnosis,
       this.askDoYouHaveMedicalGovernmentCertificate,
       this.askDoYouCurruntlyHaveWheelChair,
@@ -107,9 +110,9 @@ class FormModel extends HiveObject {
       this.wheelChairQuestion2Model,
       this.observeCanClientsitUpSafely,
       this.observeNotes,
-      this.doesPersonHavePressureSores,
+      this.doesPersonHavePressureSoresDescription,
       this.doesPersonHaveHistoryPressureSores,
-      this.describesSores,
+      this.PressureSoresDescription,
       this.recommondatonGen,
       this.recommondatonReferOut,
       this.recommondatonReferName,

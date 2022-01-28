@@ -21,7 +21,7 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       dateOfBirth: fields[1] as String?,
       age: fields[2] as int?,
       phnoNumber: fields[3] as String?,
-      careTakePhoneNumber: fields[4] as String?,
+      careTakerName: fields[4] as String?,
       diagnosis: fields[5] as String?,
       askDoYouHaveMedicalGovernmentCertificate: fields[6] as String?,
       askDoYouCurruntlyHaveWheelChair: fields[7] as String?,
@@ -32,9 +32,9 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       wheelChairQuestion2Model: fields[12] as WheelChairQuestion2Model?,
       observeCanClientsitUpSafely: fields[13] as String?,
       observeNotes: fields[14] as String?,
-      doesPersonHavePressureSores: fields[15] as String?,
+      doesPersonHavePressureSoresDescription: fields[15] as String?,
       doesPersonHaveHistoryPressureSores: fields[16] as String?,
-      describesSores: fields[17] as String?,
+      PressureSoresDescription: fields[17] as String?,
       recommondatonGen: fields[18] as String?,
       recommondatonReferOut: fields[19] as String?,
       recommondatonReferName: fields[20] as String?,
@@ -45,23 +45,25 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       seatWidth: fields[25] as String?,
       seatHeight: fields[26] as String?,
       seatLength: fields[27] as String?,
-    );
+    )..address = fields[28] as String?;
   }
 
   @override
   void write(BinaryWriter writer, FormModel obj) {
     writer
-      ..writeByte(28)
+      ..writeByte(29)
       ..writeByte(0)
       ..write(obj.clientName)
       ..writeByte(1)
       ..write(obj.dateOfBirth)
+      ..writeByte(28)
+      ..write(obj.address)
       ..writeByte(2)
       ..write(obj.age)
       ..writeByte(3)
       ..write(obj.phnoNumber)
       ..writeByte(4)
-      ..write(obj.careTakePhoneNumber)
+      ..write(obj.careTakerName)
       ..writeByte(5)
       ..write(obj.diagnosis)
       ..writeByte(6)
@@ -83,11 +85,11 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       ..writeByte(14)
       ..write(obj.observeNotes)
       ..writeByte(15)
-      ..write(obj.doesPersonHavePressureSores)
+      ..write(obj.doesPersonHavePressureSoresDescription)
       ..writeByte(16)
       ..write(obj.doesPersonHaveHistoryPressureSores)
       ..writeByte(17)
-      ..write(obj.describesSores)
+      ..write(obj.PressureSoresDescription)
       ..writeByte(18)
       ..write(obj.recommondatonGen)
       ..writeByte(19)
