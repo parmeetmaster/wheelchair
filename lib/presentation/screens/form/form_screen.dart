@@ -14,7 +14,10 @@ import 'package:wheelchair/provider/hive_provider.dart';
 import 'package:wheelchair/provider/list_of_member_provider/list_of_member_provider.dart';
 
 class FormScreen extends StatefulWidget {
-  const FormScreen({Key? key}) : super(key: key);
+
+   FormModel? model;
+
+   FormScreen({Key? key,this.model}) : super(key: key);
 
   @override
   _FormScreenState createState() => _FormScreenState();
@@ -28,9 +31,11 @@ class _FormScreenState extends State<FormScreen> {
   late final TextEditingController phno;
   late final TextEditingController careTaker;
   late final TextEditingController diagnosis;
-
   // ask question
   late final TextEditingController experenceUsingWheelChair;
+
+  //
+  late final TextEditingController observeNotes;
 
   // pressure shore
   late final TextEditingController pressureSoreDescription;
@@ -48,16 +53,10 @@ class _FormScreenState extends State<FormScreen> {
   late FormModel model;
   ScrollController scrollController = new ScrollController();
 
-
-
-
   @override
   void initState() {
     super.initState();
-    // add code for update as well
-    model = FormModel();
-    //   _getData();
-
+    model=FormModel();
     name = TextEditingController();
     dateOfBirthAndAge = TextEditingController();
     address = TextEditingController();
@@ -69,7 +68,7 @@ class _FormScreenState extends State<FormScreen> {
     experenceUsingWheelChair = TextEditingController();
     // observe
     model.wheelChairQuestion2Model = WheelChairQuestion2Model();
-
+    observeNotes=TextEditingController();
     // pressure
     pressureSoreDescription = TextEditingController();
     referOut = TextEditingController();
@@ -83,6 +82,36 @@ class _FormScreenState extends State<FormScreen> {
     seatWidth = TextEditingController();
     seatLength = TextEditingController();
     seatHeight = TextEditingController();
+
+    if(widget.model==null)
+      model = FormModel();
+    else{
+      model=widget.model!;
+      _setDataFromModel();
+    }
+  }
+
+  _setDataFromModel(){
+   setState(() {
+     name.text=model.clientName??"";
+     dateOfBirthAndAge.text=model.dateOfBirth??"";
+     address.text=model.address??"";
+     phno.text=model.phnoNumber??"";
+     careTaker.text=model.careTakerName??"";
+     diagnosis.text=model.diagnosis??"";
+     experenceUsingWheelChair.text=model.askWhatisExperenceUsingWheelChair??"";
+     observeNotes.text=model.observeNotes??"";
+     pressureSoreDescription.text=model.PressureSoresDescription??"";
+     referOut.text=model.recommondatonReferOut??"";
+     referName.text=model.recommondatonReferName??"";
+     referOrganisation.text= model.referOrganisation??"";
+     referOrganisation.text=model.referTodayDate??"";
+     fitClientName.text= model.fitclientName??"";
+     fitTodayDate.text=model.fitClientTodayDate ??"";
+     seatWidth.text=model.seatWidth??"";
+     seatLength.text=model.seatLength??"";
+     seatHeight.text=model.seatHeight??"";
+   });
   }
 
   @override
@@ -161,7 +190,7 @@ class _FormScreenState extends State<FormScreen> {
                     return '10 digits must required';
                   }
                 },
-                controller: address,
+                controller: phno,
                 prefixIcon: Icons.phone,
                 label: 'Phone Number',
                 hint: 'Enter your Permanent Address',
@@ -170,7 +199,7 @@ class _FormScreenState extends State<FormScreen> {
               CommonSpaceElement(),
               //care taker
               CommonTextField(
-                controller: phno,
+                controller: careTaker,
                 prefixIcon: Icons.wheelchair_pickup_sharp,
                 label: 'Care Taker Name',
                 hint: 'Enter your Permanent Address',
@@ -266,7 +295,7 @@ class _FormScreenState extends State<FormScreen> {
               ),
 
               CommonTextField(
-                  controller: experenceUsingWheelChair,
+                  controller: observeNotes,
                   prefixIcon: Icons.file_copy,
                   label: "Notes",
                   maxLines: 2,
@@ -303,7 +332,7 @@ class _FormScreenState extends State<FormScreen> {
                 },
               ),
               CommonTextField(
-                  controller: experenceUsingWheelChair,
+                  controller: pressureSoreDescription,
                   prefixIcon: Icons.file_copy,
                   label: "If yes describe below",
                   maxLines: 2,
@@ -421,6 +450,7 @@ class _FormScreenState extends State<FormScreen> {
                   model.careTakerName = careTaker.text;
                   model.diagnosis = diagnosis.text;
                   model.askWhatisExperenceUsingWheelChair = experenceUsingWheelChair.text;
+                  model.observeNotes=observeNotes.text;
                   model.PressureSoresDescription = pressureSoreDescription.text;
                   model.recommondatonReferOut = referOut.text;
                   model.recommondatonReferName = referName.text;
@@ -431,6 +461,10 @@ class _FormScreenState extends State<FormScreen> {
                   model.seatWidth = seatWidth.text;
                   model.seatLength = seatLength.text;
                   model.seatHeight = seatHeight.text;
+                  HiveController controller=Get.find();
+                  controller.insert(model);
+                  print("data added");
+
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(

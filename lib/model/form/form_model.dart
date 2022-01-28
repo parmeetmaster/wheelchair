@@ -13,8 +13,8 @@ class FormModel extends HiveObject {
   @HiveField(28)
   String? address;
 
-  @HiveField(2)
-  int? age;
+ /* @HiveField(2)
+  int? age;*/
 
   @HiveField(3)
   String? phnoNumber;
@@ -97,7 +97,7 @@ class FormModel extends HiveObject {
   FormModel(
       {this.clientName,
       this.dateOfBirth,
-      this.age,
+     // this.age,
       this.phnoNumber,
       this.careTakerName,
       this.diagnosis,

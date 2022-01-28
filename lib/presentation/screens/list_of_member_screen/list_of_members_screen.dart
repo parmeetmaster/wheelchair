@@ -61,22 +61,27 @@ class _ListOfMemebersState extends State<ListOfMemebers> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               children: [
                 ...controller.listOfMember.map((element) => Container(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 5),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Name:"),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text("Phone Number: ${element.phnoNumber ?? ""}"),
-                                Text(element.diagnosis ?? "")
-                              ],
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (ctx)=>FormScreen(model: element,)));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Name:"),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text("Phone Number: ${element.phnoNumber ?? ""}"),
+                                  Text(element.diagnosis ?? "")
+                                ],
+                              ),
                             ),
                           ),
                         ),

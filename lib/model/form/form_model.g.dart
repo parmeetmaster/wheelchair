@@ -19,7 +19,6 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
     return FormModel(
       clientName: fields[0] as String?,
       dateOfBirth: fields[1] as String?,
-      age: fields[2] as int?,
       phnoNumber: fields[3] as String?,
       careTakerName: fields[4] as String?,
       diagnosis: fields[5] as String?,
@@ -51,15 +50,13 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
   @override
   void write(BinaryWriter writer, FormModel obj) {
     writer
-      ..writeByte(29)
+      ..writeByte(28)
       ..writeByte(0)
       ..write(obj.clientName)
       ..writeByte(1)
       ..write(obj.dateOfBirth)
       ..writeByte(28)
       ..write(obj.address)
-      ..writeByte(2)
-      ..write(obj.age)
       ..writeByte(3)
       ..write(obj.phnoNumber)
       ..writeByte(4)
