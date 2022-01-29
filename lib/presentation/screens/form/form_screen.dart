@@ -6,18 +6,19 @@ import 'package:get/get.dart';
 import 'package:wheelchair/model/form/form_model.dart';
 import 'package:wheelchair/presentation/widgets/common_space_element.dart';
 import 'package:wheelchair/presentation/widgets/common_text_field.dart';
+import 'package:wheelchair/presentation/widgets/drop_down_container.dart';
 import 'package:wheelchair/presentation/widgets/group_radio_with_title/group_radio_with_title.dart';
 import 'package:wheelchair/presentation/widgets/group_radio_with_title/wheelchairQuestion1.dart';
 import 'package:wheelchair/presentation/widgets/group_radio_with_title/wheelchairQuestion2.dart';
 import 'package:wheelchair/presentation/widgets/text_title.dart';
 import 'package:wheelchair/provider/hive_provider.dart';
 import 'package:wheelchair/provider/list_of_member_provider/list_of_member_provider.dart';
+import 'package:wheelchair/utils/extension.dart';
 
 class FormScreen extends StatefulWidget {
+  FormModel? model;
 
-   FormModel? model;
-
-   FormScreen({Key? key,this.model}) : super(key: key);
+  FormScreen({Key? key, this.model}) : super(key: key);
 
   @override
   _FormScreenState createState() => _FormScreenState();
@@ -31,6 +32,7 @@ class _FormScreenState extends State<FormScreen> {
   late final TextEditingController phno;
   late final TextEditingController careTaker;
   late final TextEditingController diagnosis;
+
   // ask question
   late final TextEditingController experenceUsingWheelChair;
 
@@ -53,10 +55,44 @@ class _FormScreenState extends State<FormScreen> {
   late FormModel model;
   ScrollController scrollController = new ScrollController();
 
+  final generationArr = ["Gen2", "Gen3"];
+  final List<String> subGen2Arr = [
+    "Gen_2 S (25 CM - 33CM )",
+    "Gen_2 M (33 CM - 38CM )",
+    "Gen_2 L (38 CM - 43CM )",
+    "Gen_2 XL (43 CM - 48CM )"
+  ];
+  final List<String> subGen3Arr = [
+    "Gen_3 S (25 CM - 31CM )",
+    "Gen_3 M (31 CM - 36CM )",
+    "Gen_3 L (36 CM - 40CM )",
+    "Gen_3 XL (40 CM - 47CM )"
+  ];
+
+  final List<String> seatLengthArray = [
+    "Less than 41 CM SHORTEST",
+    "41 CM - 47 CM MIDDLE",
+    "Greater than 47 CM LONGEST",
+  ];
+
+  final List<String> seatHeightArray = [
+    "Greater than 52 CM HIGHEST",
+    "48 CM - 52 CM MID-HIGH",
+    "44 CM - 48 CM MID-LOW",
+    "LESS than 44 CM LOWEST",
+  ];
+
+  ListOfMemberController controller = Get.find();
+
   @override
   void initState() {
     super.initState();
-    model=FormModel();
+
+    if (widget.model == null) {
+      model = FormModel();
+      model.wheelChairQuestion1Model = WheelChairQuestion1Model();
+      model.wheelChairQuestion2Model = WheelChairQuestion2Model();
+    }
     name = TextEditingController();
     dateOfBirthAndAge = TextEditingController();
     address = TextEditingController();
@@ -64,11 +100,11 @@ class _FormScreenState extends State<FormScreen> {
     careTaker = TextEditingController();
     diagnosis = TextEditingController();
     // ask
-    model.wheelChairQuestion1Model = WheelChairQuestion1Model();
+    // model.wheelChairQuestion1Model = WheelChairQuestion1Model();
     experenceUsingWheelChair = TextEditingController();
     // observe
-    model.wheelChairQuestion2Model = WheelChairQuestion2Model();
-    observeNotes=TextEditingController();
+    // model.wheelChairQuestion2Model = WheelChairQuestion2Model();
+    observeNotes = TextEditingController();
     // pressure
     pressureSoreDescription = TextEditingController();
     referOut = TextEditingController();
@@ -83,39 +119,43 @@ class _FormScreenState extends State<FormScreen> {
     seatLength = TextEditingController();
     seatHeight = TextEditingController();
 
-    if(widget.model==null)
-      model = FormModel();
-    else{
-      model=widget.model!;
-      _setDataFromModel();
+    // UPDATE
+    if (widget.model != null) {
+      model = widget.model!;
+      _setUpdateDataFromModel();
     }
   }
 
-  _setDataFromModel(){
-   setState(() {
-     name.text=model.clientName??"";
-     dateOfBirthAndAge.text=model.dateOfBirth??"";
-     address.text=model.address??"";
-     phno.text=model.phnoNumber??"";
-     careTaker.text=model.careTakerName??"";
-     diagnosis.text=model.diagnosis??"";
-     experenceUsingWheelChair.text=model.askWhatisExperenceUsingWheelChair??"";
-     observeNotes.text=model.observeNotes??"";
-     pressureSoreDescription.text=model.PressureSoresDescription??"";
-     referOut.text=model.recommondatonReferOut??"";
-     referName.text=model.recommondatonReferName??"";
-     referOrganisation.text= model.referOrganisation??"";
-     referOrganisation.text=model.referTodayDate??"";
-     fitClientName.text= model.fitclientName??"";
-     fitTodayDate.text=model.fitClientTodayDate ??"";
-     seatWidth.text=model.seatWidth??"";
-     seatLength.text=model.seatLength??"";
-     seatHeight.text=model.seatHeight??"";
-   });
+  _setUpdateDataFromModel() {
+    setState(() {
+      name.text = model.clientName ?? "";
+      dateOfBirthAndAge.text = model.dateOfBirth ?? "";
+      address.text = model.address ?? "";
+      phno.text = model.phnoNumber ?? "";
+      careTaker.text = model.careTakerName ?? "";
+      diagnosis.text = model.diagnosis ?? "";
+      experenceUsingWheelChair.text =
+          model.askWhatisExperenceUsingWheelChair ?? "";
+      observeNotes.text = model.observeNotes ?? "";
+      pressureSoreDescription.text = model.PressureSoresDescription ?? "";
+      referOut.text = model.recommondatonReferOut ?? "";
+      referName.text = model.recommondatonReferName ?? "";
+      referOrganisation.text = model.referOrganisation ?? "";
+      referOrganisation.text = model.referTodayDate ?? "";
+      fitClientName.text = model.fitclientName ?? "";
+      fitTodayDate.text = model.fitClientTodayDate ?? "";
+      seatWidth.text = model.seatWidth ?? "";
+      seatLength.text = model.seatLength ?? "";
+      seatHeight.text = model.seatHeight ?? "";
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    _setSeatWidthGen(model.seatWidthGen, context);
+    _setSeatHeightGen(model.seatWidthGen, context);
+    _setSeatLengthGen(model.seatWidthGen, context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Fill the form"),
@@ -192,6 +232,7 @@ class _FormScreenState extends State<FormScreen> {
                 },
                 controller: phno,
                 prefixIcon: Icons.phone,
+                type: TextInputType.phone,
                 label: 'Phone Number',
                 hint: 'Enter your Permanent Address',
                 onChange: (s) {},
@@ -393,6 +434,7 @@ class _FormScreenState extends State<FormScreen> {
               ),
               CommonSpaceElement(),
               TextTitle("Wheelchair fit form"),
+              CommonSpaceElement(),
               CommonTextField(
                   controller: fitClientName,
                   prefixIcon: Icons.person,
@@ -421,22 +463,127 @@ class _FormScreenState extends State<FormScreen> {
 
               CommonSpaceElement(),
               CommonTextField(
+                  type: TextInputType.number,
                   controller: seatWidth,
+                  validator: (s) {
+                    if (s.isEmpty) {
+                      return false;
+                    }
+                  },
+                  onFieldSubmit: (val) => _setSeatWidthGen(val, context),
                   prefixIcon: Icons.event_seat,
                   label: "Seat Width",
                   hint: "Enter value in CM"),
               CommonSpaceElement(),
+              Text(
+                "Select Seat Generation",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CommonSpaceElement(
+                height: 5,
+              ),
+              DropDownContainer(
+                  hint: "Select Generation",
+                  dropDownItem: generationArr,
+                  onChanged: (s) {
+                    setState(() {
+                      model.seatWidthGen = s;
+                    });
+                  },
+                  selectedItem: model.seatWidthGen),
+              if (model.seatWidthGen != null) CommonSpaceElement(),
+              if (model.seatWidthGen != null)
+                Text(
+                  "Select Seat Width",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+
+              CommonSpaceElement(
+                height: 5,
+              ),
+              if (model.seatWidthGen != null)
+                DropDownContainer(
+                    hint: "Select seat width",
+                    dropDownItem: model.seatWidthGen == generationArr[0]
+                        ? subGen2Arr
+                        : subGen3Arr,
+                    onChanged: (s) {
+                      setState(() {
+                        model.seatWidthGenRange = s;
+                      });
+                    },
+                    selectedItem: model.seatWidthGenRange),
+              CommonSpaceElement(
+                height: 5,
+              ),
+              Divider(
+                thickness: 2,
+                color: Colors.black26,
+              ),
+              CommonSpaceElement(
+                height: 5,
+              ),
               CommonTextField(
+                  onFieldSubmit: (val) => _setSeatHeightGen(val, context),
                   controller: seatHeight,
+                  type: TextInputType.number,
                   prefixIcon: Icons.event_seat,
                   label: "Seat Height",
                   hint: "Enter value in CM"),
-              CommonSpaceElement(),
+              CommonSpaceElement(
+                height: 5,
+              ),
+              Text(
+                "Select Seat height",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CommonSpaceElement(
+                height: 5,
+              ),
+              DropDownContainer(
+                  hint: "Select Height of chair",
+                  dropDownItem: seatHeightArray,
+                  onChanged: (s) {
+                    setState(() {
+                      model.seatHeightDropDownCm = s;
+                    });
+                  },
+                  selectedItem: model.seatHeightDropDownCm),
+
+              CommonSpaceElement(
+                height: 5,
+              ),
+              Divider(
+                thickness: 2,
+                color: Colors.black26,
+              ),
+              CommonSpaceElement(
+                height: 5,
+              ),
               CommonTextField(
                   controller: seatLength,
+                  type: TextInputType.number,
+                  onFieldSubmit: (val) => _setSeatLengthGen(val, context),
                   prefixIcon: Icons.event_seat,
                   label: "Seat length",
                   hint: "Enter value in CM"),
+              CommonSpaceElement(),
+              Text(
+                "Select Seat Length",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CommonSpaceElement(
+                height: 5,
+              ),
+              DropDownContainer(
+                  hint: "Select length of chair",
+                  dropDownItem: seatLengthArray,
+                  onChanged: (s) {
+                    setState(() {
+                      model.seatLengthDropDownCm = s;
+                    });
+                  },
+                  selectedItem: model.seatLengthDropDownCm),
               CommonSpaceElement(),
               GestureDetector(
                 onTap: () async {
@@ -449,8 +596,9 @@ class _FormScreenState extends State<FormScreen> {
                   model.phnoNumber = phno.text;
                   model.careTakerName = careTaker.text;
                   model.diagnosis = diagnosis.text;
-                  model.askWhatisExperenceUsingWheelChair = experenceUsingWheelChair.text;
-                  model.observeNotes=observeNotes.text;
+                  model.askWhatisExperenceUsingWheelChair =
+                      experenceUsingWheelChair.text;
+                  model.observeNotes = observeNotes.text;
                   model.PressureSoresDescription = pressureSoreDescription.text;
                   model.recommondatonReferOut = referOut.text;
                   model.recommondatonReferName = referName.text;
@@ -461,10 +609,11 @@ class _FormScreenState extends State<FormScreen> {
                   model.seatWidth = seatWidth.text;
                   model.seatLength = seatLength.text;
                   model.seatHeight = seatHeight.text;
-                  HiveController controller=Get.find();
-                  controller.insert(model);
+                  HiveController controller = Get.find();
+                await  controller.insert(model);
+                ListOfMemberController listOfMember=Get.find();
+                  listOfMember.getExistingData();
                   print("data added");
-
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(
@@ -492,5 +641,76 @@ class _FormScreenState extends State<FormScreen> {
         ),
       ),
     );
+  }
+
+  void _setSeatWidthGen(String? seatWidthGen, BuildContext context) {
+    if (this.seatWidth.text.isEmpty) return;
+
+    if (seatWidthGen == generationArr[0]) {
+      int cm;
+      try {
+        cm = int.parse(seatWidth.text);
+      } catch (e) {
+     //   "No data inside Width".showSnackbar(context);
+        return;
+      }
+
+      if (cm <= 25 && cm <= 33) {
+        model.seatWidthGenRange = subGen2Arr[0];
+      } else if (cm >= 33 && cm <= 38) {
+        model.seatWidthGenRange = subGen2Arr[1];
+      } else if (cm >= 38 && cm <= 43) {
+        model.seatWidthGenRange = subGen2Arr[2];
+      } else if (cm >= 43 && cm <= 48) {
+        model.seatWidthGenRange = subGen2Arr[3];
+      } else if (cm >= 48) {
+        model.seatWidthGenRange = subGen2Arr[3]; // same
+      }
+    }
+// todo gen 3
+
+    setState(() {});
+  }
+
+  void _setSeatHeightGen(String? seatWidthGen, BuildContext context) {
+    if (this.seatHeight.text.isEmpty) return;
+    int cm;
+    try {
+      cm = int.parse(seatHeight.text);
+    } catch (e) {
+   //   "No data inside Width".showSnackbar(context);
+      return;
+    }
+    if (cm > 52) {
+      model.seatHeightDropDownCm = seatHeightArray[0];
+    } else if (cm >= 48 && cm <= 52) {
+      model.seatHeightDropDownCm = seatHeightArray[1];
+    } else if (cm >= 44 && cm <= 48) {
+      model.seatHeightDropDownCm = seatHeightArray[2];
+    } else if (cm < 44) {
+      model.seatHeightDropDownCm = seatHeightArray[3];
+    }
+
+    setState(() {});
+  }
+
+  void _setSeatLengthGen(String? seatWidthGen, BuildContext context) {
+    if (this.seatLength.text.isEmpty) return;
+    int cm;
+    try {
+      cm = int.parse(seatLength.text);
+    } catch (e) {
+   //   "No data inside Width".showSnackbar(context);
+      return;
+    }
+
+    if (cm < 41) {
+      model.seatLengthDropDownCm = seatLengthArray[0];
+    } else if (cm >= 41 && cm <= 47) {
+      model.seatLengthDropDownCm = seatLengthArray[1];
+    } else if (cm > 47) {
+      model.seatLengthDropDownCm = seatLengthArray[2];
+    }
+    setState(() {});
   }
 }

@@ -16,41 +16,47 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return FormModel(
-      clientName: fields[0] as String?,
-      dateOfBirth: fields[1] as String?,
-      phnoNumber: fields[3] as String?,
-      careTakerName: fields[4] as String?,
-      diagnosis: fields[5] as String?,
-      askDoYouHaveMedicalGovernmentCertificate: fields[6] as String?,
-      askDoYouCurruntlyHaveWheelChair: fields[7] as String?,
-      askWhereWillYouUse: fields[8] as String?,
-      askWhatisExperenceUsingWheelChair: fields[9] as String?,
-      observeCanClientHoldTheirSafety: fields[10] as String?,
-      wheelChairQuestion1Model: fields[11] as WheelChairQuestion1Model?,
-      wheelChairQuestion2Model: fields[12] as WheelChairQuestion2Model?,
-      observeCanClientsitUpSafely: fields[13] as String?,
-      observeNotes: fields[14] as String?,
-      doesPersonHavePressureSoresDescription: fields[15] as String?,
-      doesPersonHaveHistoryPressureSores: fields[16] as String?,
-      PressureSoresDescription: fields[17] as String?,
-      recommondatonGen: fields[18] as String?,
-      recommondatonReferOut: fields[19] as String?,
-      recommondatonReferName: fields[20] as String?,
-      referOrganisation: fields[21] as String?,
-      referTodayDate: fields[22] as String?,
-      fitclientName: fields[23] as String?,
-      fitClientTodayDate: fields[24] as String?,
-      seatWidth: fields[25] as String?,
-      seatHeight: fields[26] as String?,
-      seatLength: fields[27] as String?,
-    )..address = fields[28] as String?;
+    return FormModel()
+      ..clientName = fields[0] as String?
+      ..dateOfBirth = fields[1] as String?
+      ..address = fields[28] as String?
+      ..phnoNumber = fields[3] as String?
+      ..careTakerName = fields[4] as String?
+      ..diagnosis = fields[5] as String?
+      ..askDoYouHaveMedicalGovernmentCertificate = fields[6] as String?
+      ..askDoYouCurruntlyHaveWheelChair = fields[7] as String?
+      ..askWhereWillYouUse = fields[8] as String?
+      ..askWhatisExperenceUsingWheelChair = fields[9] as String?
+      ..observeCanClientHoldTheirSafety = fields[10] as String?
+      ..wheelChairQuestion1Model = fields[11] as WheelChairQuestion1Model?
+      ..wheelChairQuestion2Model = fields[12] as WheelChairQuestion2Model?
+      ..observeCanClientsitUpSafely = fields[13] as String?
+      ..observeNotes = fields[14] as String?
+      ..doesPersonHavePressureSoresDescription = fields[15] as String?
+      ..doesPersonHaveHistoryPressureSores = fields[16] as String?
+      ..PressureSoresDescription = fields[17] as String?
+      ..recommondatonGen = fields[18] as String?
+      ..recommondatonReferOut = fields[19] as String?
+      ..recommondatonReferName = fields[20] as String?
+      ..referOrganisation = fields[21] as String?
+      ..referTodayDate = fields[22] as String?
+      ..fitclientName = fields[23] as String?
+      ..fitClientTodayDate = fields[24] as String?
+      ..seatWidth = fields[25] as String?
+      ..seatHeight = fields[26] as String?
+      ..seatLength = fields[27] as String?
+      ..seatHeightDropDownCm = fields[34] as String?
+      ..seatWidthGen = fields[29] as String?
+      ..seatWidthGenRange = fields[30] as String?
+      ..seatLengthDropDownCm = fields[31] as String?
+      ..seatLengthPosition = fields[32] as String?
+      ..seatHeightPosition = fields[33] as String?;
   }
 
   @override
   void write(BinaryWriter writer, FormModel obj) {
     writer
-      ..writeByte(28)
+      ..writeByte(34)
       ..writeByte(0)
       ..write(obj.clientName)
       ..writeByte(1)
@@ -106,7 +112,19 @@ class FormModelAdapter extends TypeAdapter<FormModel> {
       ..writeByte(26)
       ..write(obj.seatHeight)
       ..writeByte(27)
-      ..write(obj.seatLength);
+      ..write(obj.seatLength)
+      ..writeByte(34)
+      ..write(obj.seatHeightDropDownCm)
+      ..writeByte(29)
+      ..write(obj.seatWidthGen)
+      ..writeByte(30)
+      ..write(obj.seatWidthGenRange)
+      ..writeByte(31)
+      ..write(obj.seatLengthDropDownCm)
+      ..writeByte(32)
+      ..write(obj.seatLengthPosition)
+      ..writeByte(33)
+      ..write(obj.seatHeightPosition);
   }
 
   @override

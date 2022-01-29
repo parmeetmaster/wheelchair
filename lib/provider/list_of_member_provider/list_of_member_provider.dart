@@ -5,18 +5,21 @@ import 'package:wheelchair/model/form/form_model.dart';
 import 'package:wheelchair/provider/hive_provider.dart';
 
 class ListOfMemberController extends GetxController {
-
   RxList<FormModel> listOfMember = <FormModel>[].obs;
-
+  HiveController hiveController = Get.find();
 
   @override
   void onInit() {
     getExistingData();
   }
 
-  getExistingData() async{
+  getExistingData() async {
     final HiveController hiveController = Get.find();
-    List<FormModel> list =await hiveController.getAllItems();
+    List<FormModel> list = await hiveController.getAllItems();
+    listOfMember.clear();
     listOfMember.addAll(list);
   }
+
+
+
 }

@@ -94,35 +94,25 @@ class FormModel extends HiveObject {
   @HiveField(27)
   String? seatLength;
 
-  FormModel(
-      {this.clientName,
-      this.dateOfBirth,
-     // this.age,
-      this.phnoNumber,
-      this.careTakerName,
-      this.diagnosis,
-      this.askDoYouHaveMedicalGovernmentCertificate,
-      this.askDoYouCurruntlyHaveWheelChair,
-      this.askWhereWillYouUse,
-      this.askWhatisExperenceUsingWheelChair,
-      this.observeCanClientHoldTheirSafety,
-      this.wheelChairQuestion1Model,
-      this.wheelChairQuestion2Model,
-      this.observeCanClientsitUpSafely,
-      this.observeNotes,
-      this.doesPersonHavePressureSoresDescription,
-      this.doesPersonHaveHistoryPressureSores,
-      this.PressureSoresDescription,
-      this.recommondatonGen,
-      this.recommondatonReferOut,
-      this.recommondatonReferName,
-      this.referOrganisation,
-      this.referTodayDate,
-      this.fitclientName,
-      this.fitClientTodayDate,
-      this.seatWidth,
-      this.seatHeight,
-      this.seatLength});
+  @HiveField(34)
+  String? seatHeightDropDownCm;
+
+  @HiveField(29)
+  String? seatWidthGen;
+
+  @HiveField(30)
+  String? seatWidthGenRange;
+
+  @HiveField(31)
+  String? seatLengthDropDownCm;
+
+  @HiveField(32)
+  String? seatLengthPosition;
+
+  @HiveField(33)
+  String? seatHeightPosition;
+
+
 }
 
 @HiveType(typeId: 1)

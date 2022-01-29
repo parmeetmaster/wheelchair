@@ -11,8 +11,7 @@ class HiveController extends GetxController {
   static const hiveBoxName = "formData";
 
   @override
-  void onInit() async{
-    super.onInit();
+  void onInit() {
     Hive.initFlutter();
     Hive.registerAdapter(FormModelAdapter());
     Hive.registerAdapter(WheelChairQuestion1ModelAdapter());
@@ -29,8 +28,9 @@ class HiveController extends GetxController {
 
   Future<void> insert(FormModel model) async {
     final box = await Hive.openBox<FormModel>(hiveBoxName);
-    await box.delete(model.phnoNumber);
-    await box.put(model.phnoNumber, model);
+    if(box.containsKey(model.key))
+    await model.delete();
+    await box.add(model);
     print("Item added");
   }
 }

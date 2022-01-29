@@ -14,13 +14,17 @@ class CommonTextField extends StatelessWidget {
   final Function? onTap;
   final Function(String)? validator;
   final Function(String)? onChange;
+  final Function(String)? onFieldSubmit;
   final AutovalidateMode? autovalidateMode;
   final int? maxLines;
+  final TextInputType? type;
+
 
   CommonTextField(
       {Key? key,
-        this.autovalidateMode,
-        this.maxLines,
+      this.autovalidateMode,
+      this.type,
+      this.maxLines,
       required this.controller,
       required this.prefixIcon,
       required this.label,
@@ -29,6 +33,7 @@ class CommonTextField extends StatelessWidget {
       this.helpertext,
       this.onTap,
       this.validator,
+        this.onFieldSubmit,
       this.onChange,
       this.counterText})
       : super(key: key);
@@ -37,10 +42,9 @@ class CommonTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       autovalidateMode: autovalidateMode,
-
       onChanged: (s) {
         if (onChange != null) {
-         return onChange!(s);
+          return onChange!(s);
         }
       },
       validator: (s) {
@@ -48,18 +52,21 @@ class CommonTextField extends StatelessWidget {
           return validator!(s!);
         }
       },
-
       onTap: () {
         onTap != null ? onTap!() : (() {});
       },
       controller: controller,
       readOnly: readOnly!,
-      maxLines: maxLines??1,
+      maxLines: maxLines ?? 1,
       minLines: 1,
-
+      keyboardType: type,
+      onFieldSubmitted: (value) {
+        onFieldSubmit!(value);
+      },
       decoration: InputDecoration(
         isDense: true,
         filled: true,
+
         fillColor: Colors.white,
         border: OutlineInputBorder(),
         labelText: label,

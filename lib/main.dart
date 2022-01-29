@@ -9,10 +9,9 @@ import 'package:wheelchair/provider/hive_provider.dart';
 
 import 'presentation/screens/login/login.dart';
 
-void main() async {
-
-  await Get.put(HiveController());
-  runApp(MyApp());
+void main()  {
+  Get.put(HiveController());
+Future.delayed(Duration(seconds: 1),(){  runApp(MyApp());});
 }
 
 class MyApp extends StatelessWidget {

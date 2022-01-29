@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonSpaceElement extends StatelessWidget {
-  const CommonSpaceElement({Key? key}) : super(key: key);
+  final double? height;
+  const CommonSpaceElement({Key? key,this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return   SizedBox(
-      height: 20.h,
+      height: height??20.h,
     );
   }
 }
