@@ -17,7 +17,8 @@ class ListOfMemberController extends GetxController {
     final HiveController hiveController = Get.find();
     List<FormModel> list = await hiveController.getAllItems();
     listOfMember.clear();
-    listOfMember.addAll(list);
+    listOfMember.addAll(list.reversed);
+
   }
 
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:wheelchair/presentation/screens/form/form_screen.dart';
+import 'package:wheelchair/presentation/screens/login/login.dart';
 
 import 'package:wheelchair/provider/list_of_member_provider/list_of_member_provider.dart';
 
@@ -31,7 +32,7 @@ class _ListOfMemebersState extends State<ListOfMemebers> {
           child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("Wheel Chair App"),
+            accountName: Text("Wheel Chair App",style: TextStyle(fontSize: 24.sp),),
             accountEmail: Text(""),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.orange,
@@ -53,7 +54,7 @@ class _ListOfMemebersState extends State<ListOfMemebers> {
             leading: Icon(Icons.power_settings_new_outlined),
             title: Text("Log Out"),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (ctx)=>LoginScreen()));
             },
           ),
         ],
@@ -107,7 +108,16 @@ class _ListOfMemebersState extends State<ListOfMemebers> {
                                         ),
                                       ],
                                     ),
-                                    Text(element.diagnosis ?? "")
+                                    Row(
+                                      children: [
+                                        Text(
+                                            "Diagnosis :", style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                        Text(
+                                          " ${element.diagnosis}",
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),

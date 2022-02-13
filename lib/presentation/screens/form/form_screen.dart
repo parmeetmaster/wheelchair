@@ -10,6 +10,7 @@ import 'package:wheelchair/presentation/widgets/drop_down_container.dart';
 import 'package:wheelchair/presentation/widgets/group_radio_with_title/group_radio_with_title.dart';
 import 'package:wheelchair/presentation/widgets/group_radio_with_title/wheelchairQuestion1.dart';
 import 'package:wheelchair/presentation/widgets/group_radio_with_title/wheelchairQuestion2.dart';
+import 'package:wheelchair/presentation/widgets/image_box.dart';
 import 'package:wheelchair/presentation/widgets/text_title.dart';
 import 'package:wheelchair/provider/hive_provider.dart';
 import 'package:wheelchair/provider/list_of_member_provider/list_of_member_provider.dart';
@@ -434,6 +435,8 @@ class _FormScreenState extends State<FormScreen> {
               ),
               CommonSpaceElement(),
               TextTitle("Wheelchair fit form"),
+
+
               CommonSpaceElement(),
               CommonTextField(
                   controller: fitClientName,
@@ -462,6 +465,10 @@ class _FormScreenState extends State<FormScreen> {
               ),
 
               CommonSpaceElement(),
+              ImageBox(
+                asset: "assets/images/img_2.png",
+                text: "This image instruct how to determine the width.",
+              ),
               CommonTextField(
                   type: TextInputType.number,
                   controller: seatWidth,
@@ -476,7 +483,7 @@ class _FormScreenState extends State<FormScreen> {
                   hint: "Enter value in CM"),
               CommonSpaceElement(),
               Text(
-                "Select Seat Generation",
+                "Select Seat Generation (Width)",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               CommonSpaceElement(
@@ -523,6 +530,12 @@ class _FormScreenState extends State<FormScreen> {
               CommonSpaceElement(
                 height: 5,
               ),
+
+              ImageBox(
+                asset: "assets/images/img_1.png",
+                text:"This image instruct how to determine the height.",
+              ),
+
               CommonTextField(
                   onFieldSubmit: (val) => _setSeatHeightGen(val, context),
                   controller: seatHeight,
@@ -560,6 +573,12 @@ class _FormScreenState extends State<FormScreen> {
               CommonSpaceElement(
                 height: 5,
               ),
+
+              ImageBox(
+                asset: "assets/images/img.png",
+                text: "This image instruct how to determine the height.",
+              ),
+
               CommonTextField(
                   controller: seatLength,
                   type: TextInputType.number,
@@ -610,10 +629,14 @@ class _FormScreenState extends State<FormScreen> {
                   model.seatLength = seatLength.text;
                   model.seatHeight = seatHeight.text;
                   HiveController controller = Get.find();
-                await  controller.insert(model);
-                ListOfMemberController listOfMember=Get.find();
+                  await controller.insert(model);
+                  ListOfMemberController listOfMember = Get.find();
                   listOfMember.getExistingData();
                   print("data added");
+                  "Record Add Successfully".showSnackbar(context);
+                  Future.delayed(Duration(milliseconds: 500), () {
+                    Navigator.pop(context);
+                  });
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(
@@ -651,7 +674,7 @@ class _FormScreenState extends State<FormScreen> {
       try {
         cm = int.parse(seatWidth.text);
       } catch (e) {
-     //   "No data inside Width".showSnackbar(context);
+        //   "No data inside Width".showSnackbar(context);
         return;
       }
 
@@ -666,6 +689,26 @@ class _FormScreenState extends State<FormScreen> {
       } else if (cm >= 48) {
         model.seatWidthGenRange = subGen2Arr[3]; // same
       }
+    } else if (seatWidthGen == generationArr[1]) {
+      int cm;
+      try {
+        cm = int.parse(seatWidth.text);
+      } catch (e) {
+        //   "No data inside Width".showSnackbar(context);
+        return;
+      }
+
+      if (cm <= 25 && cm <= 31) {
+        model.seatWidthGenRange = subGen3Arr[0];
+      } else if (cm >= 31 && cm <= 36) {
+        model.seatWidthGenRange = subGen3Arr[1];
+      } else if (cm >= 36 && cm <= 40) {
+        model.seatWidthGenRange = subGen3Arr[2];
+      } else if (cm >= 40 && cm <= 47) {
+        model.seatWidthGenRange = subGen3Arr[3];
+      } else if (cm >= 47) {
+        model.seatWidthGenRange = subGen3Arr[3]; // same
+      }
     }
 // todo gen 3
 
@@ -678,7 +721,7 @@ class _FormScreenState extends State<FormScreen> {
     try {
       cm = int.parse(seatHeight.text);
     } catch (e) {
-   //   "No data inside Width".showSnackbar(context);
+      //   "No data inside Width".showSnackbar(context);
       return;
     }
     if (cm > 52) {
@@ -700,7 +743,7 @@ class _FormScreenState extends State<FormScreen> {
     try {
       cm = int.parse(seatLength.text);
     } catch (e) {
-   //   "No data inside Width".showSnackbar(context);
+      //   "No data inside Width".showSnackbar(context);
       return;
     }
 
